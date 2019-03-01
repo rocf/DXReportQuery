@@ -1038,7 +1038,7 @@
             this.beiEndDate,
             this.Exit});
             this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl1.MaxItemId = 292;
+            this.ribbonControl1.MaxItemId = 293;
             this.ribbonControl1.Name = "ribbonControl1";
             this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.rpStart,

@@ -17,7 +17,6 @@ namespace DXReportQuery
             InitializeComponent();
             if (!mvvmContext1.IsDesignMode)
                 InitializeBindings();
-
             frmMainForm = this;
         }
 
