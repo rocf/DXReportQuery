@@ -8,13 +8,19 @@ namespace DXReportQuery
 {
     public static class SpreadSheetStyles
     {
+        private static bool DjwtSheetStyleInitFlag = false;
 
         public static void DjwtSheetStyleInit(IWorkbook workBook)
         {
-            DjwtSheetStyle.DjwtSheetTitleStyle(workBook);
-            DjwtSheetStyle.DjwtSheetHeadSytle(workBook);
-            DjwtSheetStyle.DjwtSheetNormalSytle(workBook);
-            DjwtSheetStyle.DjwtSheetSubTotalSytle(workBook);
+            if (!DjwtSheetStyleInitFlag)
+            {
+                DjwtSheetStyle.DjwtSheetTitleStyle(workBook);
+                DjwtSheetStyle.DjwtSheetHeadSytle(workBook);
+                DjwtSheetStyle.DjwtSheetNormalSytle(workBook);
+                DjwtSheetStyle.DjwtSheetSubTotalSytle(workBook);
+            }
+
+            DjwtSheetStyleInitFlag = true;
         }
         public class DjwtSheetStyle
         {

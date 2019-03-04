@@ -1038,7 +1038,8 @@
             this.beiEndDate,
             this.Exit});
             this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl1.MaxItemId = 294;
+            this.ribbonControl1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ribbonControl1.MaxItemId = 296;
             this.ribbonControl1.Name = "ribbonControl1";
             this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.rpStart,
@@ -1057,16 +1058,17 @@
             this.repositoryItemPopupGalleryEdit1,
             this.repositoryItemDateEdit1,
             this.repositoryItemDateEdit2});
-            this.ribbonControl1.Size = new System.Drawing.Size(836, 150);
+            this.ribbonControl1.Size = new System.Drawing.Size(955, 185);
             this.ribbonControl1.StatusBar = this.ribbonStatusBar1;
             // 
             // backstageViewControl1
             // 
             this.backstageViewControl1.Items.Add(this.backstageViewButtonItem1);
-            this.backstageViewControl1.Location = new System.Drawing.Point(342, 34);
+            this.backstageViewControl1.Location = new System.Drawing.Point(391, 44);
+            this.backstageViewControl1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.backstageViewControl1.Name = "backstageViewControl1";
             this.backstageViewControl1.OwnerControl = this.ribbonControl1;
-            this.backstageViewControl1.Size = new System.Drawing.Size(231, 333);
+            this.backstageViewControl1.Size = new System.Drawing.Size(264, 428);
             this.backstageViewControl1.TabIndex = 9;
             // 
             // backstageViewButtonItem1
@@ -1209,13 +1211,14 @@
             // ssQueryResultView
             // 
             this.ssQueryResultView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ssQueryResultView.Location = new System.Drawing.Point(2, 40);
+            this.ssQueryResultView.Location = new System.Drawing.Point(2, 47);
             this.ssQueryResultView.LookAndFeel.SkinName = "Office 2016 Colorful";
+            this.ssQueryResultView.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.ssQueryResultView.MenuManager = this.ribbonControl1;
             this.ssQueryResultView.Name = "ssQueryResultView";
             this.ssQueryResultView.Options.Import.Csv.Encoding = ((System.Text.Encoding)(resources.GetObject("ssQueryResultView.Options.Import.Csv.Encoding")));
             this.ssQueryResultView.Options.Import.Txt.Encoding = ((System.Text.Encoding)(resources.GetObject("ssQueryResultView.Options.Import.Txt.Encoding")));
-            this.ssQueryResultView.Size = new System.Drawing.Size(672, 339);
+            this.ssQueryResultView.Size = new System.Drawing.Size(768, 449);
             this.ssQueryResultView.TabIndex = 9;
             this.ssQueryResultView.Text = "ssQueryResultView";
             // 
@@ -3757,10 +3760,11 @@
             // 
             // ribbonStatusBar1
             // 
-            this.ribbonStatusBar1.Location = new System.Drawing.Point(0, 531);
+            this.ribbonStatusBar1.Location = new System.Drawing.Point(0, 683);
+            this.ribbonStatusBar1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.ribbonStatusBar1.Name = "ribbonStatusBar1";
             this.ribbonStatusBar1.Ribbon = this.ribbonControl1;
-            this.ribbonStatusBar1.Size = new System.Drawing.Size(836, 21);
+            this.ribbonStatusBar1.Size = new System.Drawing.Size(955, 27);
             // 
             // ribbonPage2
             // 
@@ -3790,14 +3794,15 @@
             this.nbiZzzsk,
             this.nbixqpggzltj});
             this.nbcRcgzbb.LinkSelectionMode = DevExpress.XtraNavBar.LinkSelectionModeType.OneInControl;
-            this.nbcRcgzbb.Location = new System.Drawing.Point(0, 150);
+            this.nbcRcgzbb.Location = new System.Drawing.Point(0, 185);
+            this.nbcRcgzbb.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.nbcRcgzbb.Name = "nbcRcgzbb";
-            this.nbcRcgzbb.OptionsNavPane.ExpandedWidth = 160;
+            this.nbcRcgzbb.OptionsNavPane.ExpandedWidth = 183;
             this.nbcRcgzbb.OptionsNavPane.ShowOverflowButton = false;
             this.nbcRcgzbb.OptionsNavPane.ShowOverflowPanel = false;
             this.nbcRcgzbb.OptionsNavPane.ShowSplitter = false;
             this.nbcRcgzbb.PaintStyleKind = DevExpress.XtraNavBar.NavBarViewKind.NavigationPane;
-            this.nbcRcgzbb.Size = new System.Drawing.Size(160, 381);
+            this.nbcRcgzbb.Size = new System.Drawing.Size(183, 498);
             this.nbcRcgzbb.TabIndex = 2;
             this.nbcRcgzbb.Text = "navBarControl1";
             this.nbcRcgzbb.View = new DevExpress.XtraNavBar.ViewInfo.StandardSkinNavigationPaneViewInfoRegistrator("Office 2016 Colorful");
@@ -3901,18 +3906,20 @@
             this.pcMain.Controls.Add(this.splitterControl1);
             this.pcMain.Controls.Add(this.spreadsheetFormulaBar1);
             this.pcMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pcMain.Location = new System.Drawing.Point(160, 150);
+            this.pcMain.Location = new System.Drawing.Point(183, 185);
+            this.pcMain.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.pcMain.Name = "pcMain";
-            this.pcMain.Size = new System.Drawing.Size(676, 381);
+            this.pcMain.Size = new System.Drawing.Size(772, 498);
             this.pcMain.TabIndex = 5;
             // 
             // splitterControl1
             // 
             this.splitterControl1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.splitterControl1.Location = new System.Drawing.Point(2, 28);
+            this.splitterControl1.Location = new System.Drawing.Point(2, 32);
+            this.splitterControl1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.splitterControl1.MinSize = 20;
             this.splitterControl1.Name = "splitterControl1";
-            this.splitterControl1.Size = new System.Drawing.Size(672, 12);
+            this.splitterControl1.Size = new System.Drawing.Size(768, 15);
             this.splitterControl1.TabIndex = 10;
             this.splitterControl1.TabStop = false;
             // 
@@ -3920,9 +3927,10 @@
             // 
             this.spreadsheetFormulaBar1.Dock = System.Windows.Forms.DockStyle.Top;
             this.spreadsheetFormulaBar1.Location = new System.Drawing.Point(2, 2);
-            this.spreadsheetFormulaBar1.MinimumSize = new System.Drawing.Size(0, 26);
+            this.spreadsheetFormulaBar1.Margin = new System.Windows.Forms.Padding(5);
+            this.spreadsheetFormulaBar1.MinimumSize = new System.Drawing.Size(0, 25);
             this.spreadsheetFormulaBar1.Name = "spreadsheetFormulaBar1";
-            this.spreadsheetFormulaBar1.Size = new System.Drawing.Size(672, 26);
+            this.spreadsheetFormulaBar1.Size = new System.Drawing.Size(768, 30);
             this.spreadsheetFormulaBar1.SpreadsheetControl = this.ssQueryResultView;
             this.spreadsheetFormulaBar1.TabIndex = 11;
             // 
@@ -4219,13 +4227,14 @@
             // 
             // frmMainView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(836, 552);
+            this.ClientSize = new System.Drawing.Size(955, 710);
             this.Controls.Add(this.pcMain);
             this.Controls.Add(this.nbcRcgzbb);
             this.Controls.Add(this.ribbonStatusBar1);
             this.Controls.Add(this.ribbonControl1);
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "frmMainView";
             this.Ribbon = this.ribbonControl1;
             this.StatusBar = this.ribbonStatusBar1;

@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using DevExpress.XtraSpreadsheet.Commands;
 
 namespace DXReportQuery
 {
@@ -13,6 +14,11 @@ namespace DXReportQuery
         public static DataTable DjwtQuery()
         {
             return SqlQuery(Config.connectionString, QueryStrings.djwtQuery, Config.beginTime, Config.endTime);               
+        }
+
+        public static DataTable ZtgblQuery()
+        {
+            return SqlQuery(Config.connectionString, QueryStrings.ztgblQuery, Config.beginTime, Config.endTime);
         }
 
         private static DataTable SqlQuery(string connectionString, string sqlString, string beginTime, string endTime)

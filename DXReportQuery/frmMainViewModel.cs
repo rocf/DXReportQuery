@@ -53,6 +53,9 @@ namespace DXReportQuery
                 case "nbiDjwt":
                     SpreadView.DjwtView();
                     break;
+                case "nbiWtgbl":
+                    SpreadView.WtgblView();
+                    break;
                 default:
                     break;
             }

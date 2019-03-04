@@ -61,6 +61,7 @@ namespace DXReportQuery
             workbook.DocumentSettings.R1C1ReferenceStyle = true;
 
             Worksheet worksheet = SpreadView.GetWorkSheet(workbook, sheetName);
+            workbook.Worksheets.ActiveWorksheet = workbook.Worksheets[sheetName];
             worksheet.ActiveView.ShowGridlines = false;
             Range sheetTitleRange = worksheet.Range.FromLTRB(sheetRowCounts, sheetRowCounts, 8, sheetRowCounts);
             worksheet.MergeCells(sheetTitleRange);
@@ -141,11 +142,41 @@ namespace DXReportQuery
         {
             frmMainView.frmMainForm.ssQueryResultView.BeginUpdate();
 
-            string sheetName = "";
-            string sheetTitle = string.Format("{0}至{1}", Config.beginTime, Config.endTime);
+            string sheetName = "问题关闭率";
+            string sheetTitle1 = string.Format("{0}至{1}", Config.beginTime, Config.endTime);
+            string sheetTitle2 = "整体关闭率统计";
+            string sheetTitle3 = "vip问题关闭率统计";
+            string sheetTitle4 = "处理中问题处理完成情况统计";
+            string sheetTitle5 = "问题效能分析报表（全部）";
+
             int sheetRowCounts = 0;
 
-            frmMainView.frmMainForm.ssQueryResultView.BeginUpdate();
+            DataTable ztgblDataTable= QueryResults.ZtgblQuery();
+            int rowCount = ztgblDataTable.Rows.Count;
+
+            IWorkbook workbook = frmMainView.frmMainForm.ssQueryResultView.Document;
+
+            workbook.DocumentSettings.R1C1ReferenceStyle = true;
+
+            Worksheet worksheet = SpreadView.GetWorkSheet(workbook, sheetName);
+            workbook.Worksheets.ActiveWorksheet = workbook.Worksheets[sheetName];
+            worksheet.ActiveView.ShowGridlines = false;
+
+            Range sheetTitle1Range = worksheet.Range.FromLTRB(sheetRowCounts, sheetRowCounts, 15, sheetRowCounts);
+            worksheet.MergeCells(sheetTitle1Range);
+            sheetTitle1Range.SetValueFromText(sheetTitle1);
+            sheetRowCounts += 1;
+
+            Range sheetTitle2Range = worksheet.Range.FromLTRB(sheetRowCounts, sheetRowCounts, 15, sheetRowCounts);
+            worksheet.MergeCells(sheetTitle2Range);
+            sheetTitle2Range.SetValueFromText(sheetTitle2);
+            sheetRowCounts += 1;
+
+
+
+
+            workbook.DocumentSettings.R1C1ReferenceStyle = false;
+            frmMainView.frmMainForm.ssQueryResultView.EndUpdate();
 
         }
     }
