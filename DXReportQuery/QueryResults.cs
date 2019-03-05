@@ -21,6 +21,16 @@ namespace DXReportQuery
             return SqlQuery(Config.connectionString, QueryStrings.ztgblQuery, Config.beginTime, Config.endTime);
         }
 
+        public static DataTable VIPWtgblQuery()
+        {
+            return SqlQuery(Config.connectionString, QueryStrings.vipWtgblQuery, Config.beginTime, Config.endTime);
+        }
+
+        public static DataTable ClzWtclQuery()
+        {
+            return SqlQuery(Config.connectionString, QueryStrings.clzWtclQuery, Config.beginTime, Config.endTime);
+        }
+
         private static DataTable SqlQuery(string connectionString, string sqlString, string beginTime, string endTime)
         {
             using (SqlConnection sqlConnection = new SqlConnection())

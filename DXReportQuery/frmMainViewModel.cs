@@ -51,10 +51,14 @@ namespace DXReportQuery
             switch(e.Link.ItemName)
             {
                 case "nbiDjwt":
+                    frmMainView.frmMainForm.splashScreenManager2.ShowWaitForm();
                     SpreadView.DjwtView();
+                    frmMainView.frmMainForm.splashScreenManager2.CloseWaitForm();
                     break;
                 case "nbiWtgbl":
+                    frmMainView.frmMainForm.splashScreenManager2.ShowWaitForm();
                     SpreadView.WtgblView();
+                    frmMainView.frmMainForm.splashScreenManager2.CloseWaitForm();
                     break;
                 default:
                     break;

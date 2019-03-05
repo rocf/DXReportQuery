@@ -63,7 +63,7 @@ namespace DXReportQuery
             Worksheet worksheet = SpreadView.GetWorkSheet(workbook, sheetName);
             workbook.Worksheets.ActiveWorksheet = workbook.Worksheets[sheetName];
             worksheet.ActiveView.ShowGridlines = false;
-            Range sheetTitleRange = worksheet.Range.FromLTRB(sheetRowCounts, sheetRowCounts, 8, sheetRowCounts);
+            Range sheetTitleRange = worksheet.Range.FromLTRB(0, sheetRowCounts, 8, sheetRowCounts);
             worksheet.MergeCells(sheetTitleRange);
             sheetTitleRange.Style = workbook.Styles["myDjwtSheetTitleStyle"];
             sheetTitleRange.SetValueFromText(sheetTitle);
@@ -103,21 +103,23 @@ namespace DXReportQuery
 
                 for(int i = 0; i < djwtDataTable.Columns.Count; i++)
                 {
-                    if(i == 0)
+                    Range sheetSubTotal = worksheet.Range.FromLTRB(i, sheetRowCounts, i, sheetRowCounts);
+
+                    if (i == 0)
                     {
-                        worksheet.MergeCells(worksheet.Range.FromLTRB(0, sheetRowCounts - kv.Value, 0, sheetRowCounts));
+                        sheetSubTotal = worksheet.Range.FromLTRB(0, sheetRowCounts - kv.Value, 0, sheetRowCounts);
+                        worksheet.MergeCells(sheetSubTotal);
                     }
 
                     if (i == 1)
                     {
-                        Range sheetSubTotal = worksheet.Range.FromLTRB(1, sheetRowCounts, 1, sheetRowCounts);
+                        
                         sheetSubTotal.SetValueFromText("小计：");
                         sheetSubTotal.Style = workbook.Styles["myDjwtSheetSubTotalSytle"];
                     }
 
                     if ( i>=3 & i<=6)
                     {
-                        Range sheetSubTotal = worksheet.Range.FromLTRB(i, sheetRowCounts, i, sheetRowCounts);
                         sheetSubTotal.Formula = $"=SUM(R[-{kv.Value}]C:R[-1]C)";
                         sheetSubTotal.Style = workbook.Styles["myDjwtSheetSubTotalSytle"];
 
@@ -152,32 +154,233 @@ namespace DXReportQuery
             int sheetRowCounts = 0;
 
             DataTable ztgblDataTable= QueryResults.ZtgblQuery();
-            int rowCount = ztgblDataTable.Rows.Count;
+            int ztgblRowCount = ztgblDataTable.Rows.Count;
+
+            DataTable vipWtgblDataTable = QueryResults.VIPWtgblQuery();
+            int vipWtgblRowCount = vipWtgblDataTable.Rows.Count;
+
+            DataTable clzWtclDataTable = QueryResults.ClzWtclQuery();
+            int clzWtclRowCount = clzWtclDataTable.Rows.Count;
+
 
             IWorkbook workbook = frmMainView.frmMainForm.ssQueryResultView.Document;
-
             workbook.DocumentSettings.R1C1ReferenceStyle = true;
 
             Worksheet worksheet = SpreadView.GetWorkSheet(workbook, sheetName);
             workbook.Worksheets.ActiveWorksheet = workbook.Worksheets[sheetName];
             worksheet.ActiveView.ShowGridlines = false;
 
-            Range sheetTitle1Range = worksheet.Range.FromLTRB(sheetRowCounts, sheetRowCounts, 15, sheetRowCounts);
+            Range sheetTitle1Range = worksheet.Range.FromLTRB(0, sheetRowCounts, 14, sheetRowCounts);
             worksheet.MergeCells(sheetTitle1Range);
             sheetTitle1Range.SetValueFromText(sheetTitle1);
             sheetRowCounts += 1;
 
-            Range sheetTitle2Range = worksheet.Range.FromLTRB(sheetRowCounts, sheetRowCounts, 15, sheetRowCounts);
+            Range sheetTitle2Range = worksheet.Range.FromLTRB(0, sheetRowCounts, 14, sheetRowCounts);
             worksheet.MergeCells(sheetTitle2Range);
             sheetTitle2Range.SetValueFromText(sheetTitle2);
             sheetRowCounts += 1;
 
+            List<string> sheetTable1HeadList = new List<string> { "部门", "问题总数", "上周问题总数", "环比", "环比增长率", "全部问题(过滤付费)", "无状态问题(过滤付费)", "付费问题量", "待用户确认", "处理中", "待处理", "关闭", "关闭率", "上周关闭率", "同比" };
+
+            for (int i = 0; i < sheetTable1HeadList.Count; i++)
+            {
+                Range sheetTable1HeadRange = worksheet.Range.FromLTRB(i, sheetRowCounts, i, sheetRowCounts);
+                sheetTable1HeadRange.SetValueFromText(sheetTable1HeadList[i].ToString());
+               // sheetTableHeadRange.Style = workbook.Styles[""];
+            }
+            sheetRowCounts += 1;
+
+            foreach (DataRow dr in ztgblDataTable.AsEnumerable())
+            {
+                for (int i = 0; i < ztgblDataTable.Columns.Count; i++)
+                {
+                    Range sheetNormal = worksheet.Range.FromLTRB(i, sheetRowCounts, i, sheetRowCounts);
+                    sheetNormal.SetValueFromText(dr[i].ToString());
+                    //sheetNormal.Style = workbook.Styles[""];
+                    if(i == 4 || (i >= 12 & i <= 14))
+                    {
+                        sheetNormal.NumberFormat = "0.00%";
+
+                        if (i == 4)
+                        {
+                            sheetNormal.Formula = "RC[-1]/RC[-2]";
+                        }
+
+                        if (i == 14)
+                        {
+                            sheetNormal.Formula = "RC[-2] - RC[-1]";
+                        }
+                    }
+                }
+                sheetRowCounts += 1;
+            }
+
+            for (int i = 0; i < ztgblDataTable.Columns.Count; i++)            
+            {
+                Range sheetTotal = worksheet.Range.FromLTRB(i, sheetRowCounts, i, sheetRowCounts);
+                sheetTotal.Formula = $"SUM(R[-{ztgblRowCount}]C:R[-1]C)";
+
+                if (i == 0)
+                {
+                    sheetTotal.SetValueFromText("合计：");
+                }
+
+                if (i == 4)
+                {
+                    sheetTotal.Formula = "RC[-1]/RC[-2]";
+                }
+
+                if (i >= 12 & i <= 14)
+                {
+                    sheetTotal.Formula = $"AVERAGE(R[-{ztgblRowCount}]C:R[-1]C)";
+                    sheetTotal.NumberFormat = "0.00%";
+                }
+            }
+            sheetRowCounts += 2;
+
+            Range sheetTitle3Range = worksheet.Range.FromLTRB(0, sheetRowCounts, 12, sheetRowCounts);
+            worksheet.MergeCells(sheetTitle3Range);
+            sheetTitle3Range.SetValueFromText(sheetTitle3);
+            sheetRowCounts += 1;
+
+            List<string> sheetTable2HeadList = new List<string> { "部门", "全部问题", "全部问题(过滤付费)", "无状态问题(过滤付费)", "付费问题量", "待用户确认", "处理中", "待处理", "关闭", "关闭率", "上周关闭率", "同比", "问题占比" };
+            for (int i = 0; i < sheetTable2HeadList.Count; i++)
+            {
+                Range sheetTable2HeadRange = worksheet.Range.FromLTRB(i, sheetRowCounts, i, sheetRowCounts);
+                sheetTable2HeadRange.SetValueFromText(sheetTable2HeadList[i].ToString());
+                // sheetTableHeadRange.Style = workbook.Styles[""];
+            }
+            sheetRowCounts += 1;
 
 
+            foreach (DataRow dr in vipWtgblDataTable.AsEnumerable())
+            {
+                for (int i = 0; i < vipWtgblDataTable.Columns.Count; i++)
+                {
+                    Range sheetNormal = worksheet.Range.FromLTRB(i, sheetRowCounts, i, sheetRowCounts);
+                    sheetNormal.SetValueFromText(dr[i].ToString());
+                    //sheetNormal.Style = workbook.Styles[""];
+
+                    if (i >= 9 & i <= 12)
+                    {                       
+                        sheetNormal.NumberFormat = "0.00%";
+
+                        if (i == 9)
+                        {
+                            sheetNormal.Formula = "RC[-1]/RC[-6]";
+                        }
+
+                        if (i == 11)
+                        {
+                            sheetNormal.Formula = "RC[-2] - RC[-1]";
+                        }
+                    }
+
+                    
+                }
+                sheetRowCounts += 1;
+            }
+
+             for (int i = 0; i < vipWtgblDataTable.Columns.Count; i++)            
+             {
+                Range sheetTotal = worksheet.Range.FromLTRB(i, sheetRowCounts, i, sheetRowCounts);
+                sheetTotal.Formula = $"SUM(R[-{vipWtgblRowCount}]C:R[-1]C)";
+
+                if (i == 0)
+                {
+                    sheetTotal.SetValueFromText("合计：");
+                }
+
+                if (i >= 9 & i <= 12)
+                {
+                    sheetTotal.Formula = $"AVERAGE(R[-{ztgblRowCount}]C:R[-1]C)";
+                    sheetTotal.NumberFormat = "0.00%";
+                }
+             }
+            sheetRowCounts += 2;
+
+
+            Range sheetTitle4Range = worksheet.Range.FromLTRB(0, sheetRowCounts, 11, sheetRowCounts);
+            worksheet.MergeCells(sheetTitle4Range);
+            sheetTitle4Range.SetValueFromText(sheetTitle4);
+            sheetRowCounts += 1;
+
+            List<string> sheetTable3HeadList = new List<string> { "部门", "问题总数", "全部问题(过滤付费)", "无状态问题(过滤付费)", "付费问题量", "待用户确认", "处理中", "待处理", "关闭", "关闭率", "上周关闭率", "同比" };
+            for (int i = 0; i < sheetTable3HeadList.Count; i++)
+            {
+                Range sheetTable3HeadRange = worksheet.Range.FromLTRB(i, sheetRowCounts, i, sheetRowCounts);
+                sheetTable3HeadRange.SetValueFromText(sheetTable3HeadList[i].ToString());
+
+            }
+            sheetRowCounts += 1;
+
+
+            foreach(DataRow dr in clzWtclDataTable.AsEnumerable())
+            {
+                for(int i = 0; i < clzWtclDataTable.Columns.Count; i++)
+                {
+                    Range sheetNormal = worksheet.Range.FromLTRB(i, sheetRowCounts, i, sheetRowCounts);
+                    sheetNormal.SetValueFromText(dr[i].ToString());
+
+                    if (i >= 9 & i <= 11)
+                    {
+                        sheetNormal.NumberFormat = "0.00%";
+
+                        if(i == 9)
+                        {
+                            sheetNormal.Formula = "RC[-1]/RC[-6]";
+                        }
+
+                        if (i == 11)
+                        {
+                            sheetNormal.Formula = "RC[-2] - RC[-1]";
+                        }
+                    }
+                }
+                sheetRowCounts += 1;
+            }
+
+            for (int i = 0; i < clzWtclDataTable.Columns.Count; i++)
+            {
+                Range sheetTotal = worksheet.Range.FromLTRB(i, sheetRowCounts, i, sheetRowCounts);
+                sheetTotal.Formula = $"SUM(R[-{clzWtclRowCount}]C:R[-1]C)";
+
+                if (i == 0)
+                {
+                    sheetTotal.SetValueFromText("合计：");
+                }
+
+                if (i >= 9 & i <= 11)
+                {
+                    sheetTotal.Formula = $"AVERAGE(R[-{clzWtclRowCount}]C:R[-1]C)";
+                    sheetTotal.NumberFormat = "0.00%";
+
+                    if (i == 11)
+                    {
+                        sheetTotal.Formula = "RC[-2] - RC[-1]";
+                    }
+                }
+            }
+            sheetRowCounts += 2;
+        
+            /*
+            Range sheetTitle5Range = worksheet.Range.FromLTRB(0, sheetRowCounts, 5, sheetRowCounts);
+            worksheet.MergeCells(sheetTitle5Range);
+            sheetTitle5Range.SetValueFromText(sheetTitle5);
+            sheetRowCounts += 1;
+
+            List<string> sheetTable4HeadList = new List<string> {"行业", "平均响应速度", "平均解决周期", "平均关闭周期", "覆盖代理商数", "平均处理次数"};
+            for(int i = 0; i < sheetTable4HeadList.Count; i++)
+            {
+                Range sheetTable4HeadRange = worksheet.Range.FromLTRB(i, sheetRowCounts, i, sheetRowCounts);
+                sheetTable4HeadRange.SetValueFromText(sheetTable4HeadList[i].ToString());
+            }
+            sheetRowCounts += 1;
+
+            */
 
             workbook.DocumentSettings.R1C1ReferenceStyle = false;
             frmMainView.frmMainForm.ssQueryResultView.EndUpdate();
-
         }
     }
 
