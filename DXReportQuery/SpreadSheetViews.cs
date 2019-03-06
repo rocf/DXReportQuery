@@ -430,13 +430,15 @@ namespace DXReportQuery
             deptDic.Add("6", "eshop");
 
             Dictionary<string, int> deptCountDic = new Dictionary<string, int>();
+            string oldKey = "1";
 
             foreach (string key in deptDic.Keys)
             {
                 DataTable QyxnDataTable = QueryResults.QyxnQuery(key);
                 Dictionary<string, int> nameCount = new Dictionary<string, int>();
                 List<int> sheetSubTotalRows = new List<int> { };
-                int comparedNameCount = 0;
+                string nowKey = key;
+
                 deptCountDic.Add(key, QyxnDataTable.Rows.Count);
 
                 var queryCountResult = from djwt in QyxnDataTable.AsEnumerable()
@@ -452,6 +454,8 @@ namespace DXReportQuery
                 {
                     queryCountResult.ToList().ForEach(q => nameCount.Add(q.Name, q.count));
                 }
+
+              
 
                 foreach (KeyValuePair<string, int> kv in nameCount)
                 {
@@ -506,63 +510,57 @@ namespace DXReportQuery
                     sheetRowCounts += 1;
                     deptCountDic[key] = deptCountDic[key] + 1;
 
-                    sheetSubTotalRows.Add(sheetRowCounts);
+                    sheetSubTotalRows.Add(sheetRowCounts);        
+                }
 
-                    comparedNameCount += 1;
 
-                    if (comparedNameCount == nameCount.Count)
+
+                for (int i = 0; i < QyxnDataTable.Columns.Count; i++)
+                {
+                    Range sheetTotal = worksheet.Range.FromLTRB(i, sheetRowCounts, i, sheetRowCounts);
+                    switch (i)
                     {
-                        for (int i = 0; i < QyxnDataTable.Columns.Count; i++)
-                        {
-                            Range sheetTotal = worksheet.Range.FromLTRB(i, sheetRowCounts, i, sheetRowCounts);
-                            switch (i)
+                        case 0:
+                            sheetTotal = worksheet.Range.FromLTRB(0, sheetRowCounts - deptCountDic[key], 0, sheetRowCounts );
+                            worksheet.MergeCells(sheetTotal);
+                            break;
+                        case 1:
+                            break;
+                        case 2:
+                            sheetTotal.SetValueFromText("合计：");
+                            break;
+                        case 3:
+                        case 11:
+                        case 12:
+                            string sumString = "";
+                            for (int a = 0; a < sheetSubTotalRows.Count; a++)
                             {
-                                case 0:
-                                    sheetTotal = worksheet.Range.FromLTRB(0, sheetRowCounts - deptCountDic[key], 0, sheetRowCounts - 1);
-                                    worksheet.MergeCells(sheetTotal);
-                                    break;
-                                case 1:
-                                    break;
-                                case 2:
-                                    sheetTotal.SetValueFromText("合计：");
-                                    break;
-                                case 3:
-                                case 11:
-                                case 12:
-                                    string sumString = "";
-                                    for (int a = 0; a < sheetSubTotalRows.Count; a++)
-                                    {
-                                        sumString = sumString + string.Format($"R{sheetSubTotalRows[a]}C,");
-                                    }
-                                    sumString = sumString.TrimEnd(',');
-
-                                    sheetTotal.Formula = $"=SUM({sumString})";
-                                    break;
-                                case 4:
-                                case 5:
-                                case 6:
-                                case 7:
-                                case 8:
-                                case 9:
-                                case 10:
-                                    string avgString = "";
-                                    for (int a = 0; a < sheetSubTotalRows.Count; a++)
-                                    {
-                                        avgString = avgString + string.Format($"R{sheetSubTotalRows[a]}C,");
-                                    }
-                                    avgString = avgString.TrimEnd(',');
-
-                                    sheetTotal.Formula = $"=AVERAGE({avgString})";
-                                    break;
-
+                                sumString = sumString + string.Format($"R{sheetSubTotalRows[a]}C,");
                             }
+                            sumString = sumString.TrimEnd(',');
 
-                        }
+                            sheetTotal.Formula = $"=SUM({sumString})";
+                            break;
+                        case 4:
+                        case 5:
+                        case 6:
+                        case 7:
+                        case 8:
+                        case 9:
+                        case 10:
+                            string avgString = "";
+                            for (int a = 0; a < sheetSubTotalRows.Count; a++)
+                            {
+                                avgString = avgString + string.Format($"R{sheetSubTotalRows[a]}C,");
+                            }
+                            avgString = avgString.TrimEnd(',');
+
+                            sheetTotal.Formula = $"=AVERAGE({avgString})";
+                            break;
                     }
                 }
 
-               
-
+                sheetRowCounts += 1;
 
             }
 
