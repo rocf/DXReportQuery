@@ -60,6 +60,13 @@ namespace DXReportQuery
                     SpreadView.WtgblView();
                     frmMainView.frmMainForm.splashScreenManager2.CloseWaitForm();
                     break;
+                case "nbiWtmxgbl":
+                    break;
+                case "nbiQyxn":
+                    frmMainView.frmMainForm.splashScreenManager2.ShowWaitForm();
+                    SpreadView.QyxnView();
+                    frmMainView.frmMainForm.splashScreenManager2.CloseWaitForm();
+                    break;
                 default:
                     break;
             }

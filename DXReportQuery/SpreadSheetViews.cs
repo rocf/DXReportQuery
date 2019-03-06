@@ -65,7 +65,7 @@ namespace DXReportQuery
             worksheet.ActiveView.ShowGridlines = false;
             Range sheetTitleRange = worksheet.Range.FromLTRB(0, sheetRowCounts, 8, sheetRowCounts);
             worksheet.MergeCells(sheetTitleRange);
-            sheetTitleRange.Style = workbook.Styles["myDjwtSheetTitleStyle"];
+           // sheetTitleRange.Style = workbook.Styles["myDjwtSheetTitleStyle"];
             sheetTitleRange.SetValueFromText(sheetTitle);
             sheetRowCounts += 1;
 
@@ -74,10 +74,10 @@ namespace DXReportQuery
             {
                 Range sheetTableHeadRange = worksheet.Range.FromLTRB(i, sheetRowCounts, i, sheetRowCounts);
                 sheetTableHeadRange.SetValueFromText(sheetTableHeadList[i].ToString());
-                sheetTableHeadRange.Style = workbook.Styles["myDjwtSheetHeadSytle"];
+                //sheetTableHeadRange.Style = workbook.Styles["myDjwtSheetHeadSytle"];
                 if (i >= 6)
                 {
-                    sheetTableHeadRange.Style = workbook.Styles["Output"];
+                   // sheetTableHeadRange.Style = workbook.Styles["Output"];
                 }
             }
             sheetRowCounts += 1;
@@ -91,7 +91,7 @@ namespace DXReportQuery
                     {
                         Range sheetNormal = worksheet.Range.FromLTRB(i, sheetRowCounts, i, sheetRowCounts);
                         sheetNormal.SetValueFromText(dr[i].ToString());
-                        sheetNormal.Style = workbook.Styles["myDjwtSheetNormalSytle"];
+                        //sheetNormal.Style = workbook.Styles["myDjwtSheetNormalSytle"];
 
                         if (i == 6)
                         {
@@ -115,13 +115,13 @@ namespace DXReportQuery
                     {
                         
                         sheetSubTotal.SetValueFromText("小计：");
-                        sheetSubTotal.Style = workbook.Styles["myDjwtSheetSubTotalSytle"];
+                        //sheetSubTotal.Style = workbook.Styles["myDjwtSheetSubTotalSytle"];
                     }
 
                     if ( i>=3 & i<=6)
                     {
                         sheetSubTotal.Formula = $"=SUM(R[-{kv.Value}]C:R[-1]C)";
-                        sheetSubTotal.Style = workbook.Styles["myDjwtSheetSubTotalSytle"];
+                       // sheetSubTotal.Style = workbook.Styles["myDjwtSheetSubTotalSytle"];
 
                         if (i == 6)
                         {
@@ -380,6 +380,192 @@ namespace DXReportQuery
             */
 
             workbook.DocumentSettings.R1C1ReferenceStyle = false;
+            frmMainView.frmMainForm.ssQueryResultView.EndUpdate();
+        }
+
+        public static void WtmjgblView()
+        {
+
+
+        }
+
+        public static void QyxnView()
+        {
+            frmMainView.frmMainForm.ssQueryResultView.BeginUpdate();
+
+            string sheetName = "区域效能";
+            string sheetTitle = string.Format("{0}至{1}区域效能", Config.beginTime, Config.endTime);
+            int sheetRowCounts = 0;             //表单内容当前行数
+
+            IWorkbook workbook = frmMainView.frmMainForm.ssQueryResultView.Document;
+            workbook.DocumentSettings.R1C1ReferenceStyle = true;
+
+            Worksheet worksheet = SpreadView.GetWorkSheet(workbook, sheetName);
+            workbook.Worksheets.ActiveWorksheet = workbook.Worksheets[sheetName];
+            worksheet.ActiveView.ShowGridlines = false;
+            Range sheetTitleRange = worksheet.Range.FromLTRB(0, sheetRowCounts, 12, sheetRowCounts);
+            worksheet.MergeCells(sheetTitleRange);
+            // sheetTitleRange.Style = workbook.Styles["myDjwtSheetTitleStyle"];
+            sheetTitleRange.SetValueFromText(sheetTitle);
+            sheetRowCounts += 1;
+
+            List<string> sheetTableHeadList = new List<string> { "行业","负责人","省份","问题取样数","实际响应速度","实际解决周期","实际关闭周期","有效响应速度","有效解决周期","有效关闭周期","平均回复次数","响应超时","处理超时" };
+            for (int i = 0; i < sheetTableHeadList.Count; i++)
+            {
+                Range sheetTableHeadRange = worksheet.Range.FromLTRB(i, sheetRowCounts, i, sheetRowCounts);
+                sheetTableHeadRange.SetValueFromText(sheetTableHeadList[i].ToString());
+                //sheetTableHeadRange.Style = workbook.Styles["myDjwtSheetHeadSytle"];
+
+            }
+            sheetRowCounts += 1;
+            
+            Dictionary<string, string> deptDic = new Dictionary<string, string>();
+            deptDic.Add("1", "商超");
+            deptDic.Add("C", "生鲜便利");
+            deptDic.Add("8", "商锐");
+            deptDic.Add("3", "专卖");
+            deptDic.Add("H", "孕婴童");
+            deptDic.Add("2", "餐饮");
+            deptDic.Add("I", "星食客");
+            deptDic.Add("6", "eshop");
+
+            Dictionary<string, int> deptCountDic = new Dictionary<string, int>();
+
+            foreach (string key in deptDic.Keys)
+            {
+                DataTable QyxnDataTable = QueryResults.QyxnQuery(key);
+                Dictionary<string, int> nameCount = new Dictionary<string, int>();
+                List<int> sheetSubTotalRows = new List<int> { };
+                int comparedNameCount = 0;
+                deptCountDic.Add(key, QyxnDataTable.Rows.Count);
+
+                var queryCountResult = from djwt in QyxnDataTable.AsEnumerable()
+                                       group djwt by new { Name = djwt.Field<string>("Name") }
+                                       into g
+                                       select new
+                                       {
+                                           g.Key.Name,
+                                           count = g.Count()
+                                       };
+
+                if (queryCountResult.ToList().Count > 0)
+                {
+                    queryCountResult.ToList().ForEach(q => nameCount.Add(q.Name, q.count));
+                }
+
+                foreach (KeyValuePair<string, int> kv in nameCount)
+                {
+                    DataRow[] dataRows = QyxnDataTable.Select($@"Name='{kv.Key}'");
+                    
+                    foreach (DataRow dr in dataRows)
+                    {
+                        for (int i = 0; i < QyxnDataTable.Columns.Count; i++)
+                        {
+                            Range sheetNormal = worksheet.Range.FromLTRB(i, sheetRowCounts, i, sheetRowCounts);
+                            sheetNormal.SetValueFromText(dr[i].ToString());
+                            //sheetNormal.Style = workbook.Styles["myDjwtSheetNormalSytle"];
+                        }
+                        sheetRowCounts += 1;
+                    }
+
+                    for (int i = 0; i < QyxnDataTable.Columns.Count; i++)
+                    {
+                        Range sheetSubTotal = worksheet.Range.FromLTRB(i, sheetRowCounts, i, sheetRowCounts);
+
+
+                        if (i == 1)
+                        {
+                            sheetSubTotal = worksheet.Range.FromLTRB(i, sheetRowCounts - kv.Value, i, sheetRowCounts);
+                            worksheet.MergeCells(sheetSubTotal);
+                        }
+
+                        if (i == 2)
+                        {
+
+                            sheetSubTotal.SetValueFromText("小计：");
+                            //sheetSubTotal.Style = workbook.Styles["myDjwtSheetSubTotalSytle"];
+                        }
+
+                        if (i == 3)
+                        {
+                            sheetSubTotal.Formula = $"=SUM(R[-{kv.Value}]C:R[-1]C)";
+                        }
+                        if (i >= 4 & i <= 10)
+                        {
+                            sheetSubTotal.Formula = $"=AVERAGE(R[-{kv.Value}]C:R[-1]C)";
+
+                        }
+                        if (i >= 11)
+                        {
+                            sheetSubTotal.Formula = $"=SUM(R[-{kv.Value}]C:R[-1]C)";
+                        }
+
+                        
+                    }
+                    
+                    sheetRowCounts += 1;
+                    deptCountDic[key] = deptCountDic[key] + 1;
+
+                    sheetSubTotalRows.Add(sheetRowCounts);
+
+                    comparedNameCount += 1;
+
+                    if (comparedNameCount == nameCount.Count)
+                    {
+                        for (int i = 0; i < QyxnDataTable.Columns.Count; i++)
+                        {
+                            Range sheetTotal = worksheet.Range.FromLTRB(i, sheetRowCounts, i, sheetRowCounts);
+                            switch (i)
+                            {
+                                case 0:
+                                    sheetTotal = worksheet.Range.FromLTRB(0, sheetRowCounts - deptCountDic[key], 0, sheetRowCounts - 1);
+                                    worksheet.MergeCells(sheetTotal);
+                                    break;
+                                case 1:
+                                    break;
+                                case 2:
+                                    sheetTotal.SetValueFromText("合计：");
+                                    break;
+                                case 3:
+                                case 11:
+                                case 12:
+                                    string sumString = "";
+                                    for (int a = 0; a < sheetSubTotalRows.Count; a++)
+                                    {
+                                        sumString = sumString + string.Format($"R{sheetSubTotalRows[a]}C,");
+                                    }
+                                    sumString = sumString.TrimEnd(',');
+
+                                    sheetTotal.Formula = $"=SUM({sumString})";
+                                    break;
+                                case 4:
+                                case 5:
+                                case 6:
+                                case 7:
+                                case 8:
+                                case 9:
+                                case 10:
+                                    string avgString = "";
+                                    for (int a = 0; a < sheetSubTotalRows.Count; a++)
+                                    {
+                                        avgString = avgString + string.Format($"R{sheetSubTotalRows[a]}C,");
+                                    }
+                                    avgString = avgString.TrimEnd(',');
+
+                                    sheetTotal.Formula = $"=AVERAGE({avgString})";
+                                    break;
+
+                            }
+
+                        }
+                    }
+                }
+
+               
+
+
+            }
+
             frmMainView.frmMainForm.ssQueryResultView.EndUpdate();
         }
     }

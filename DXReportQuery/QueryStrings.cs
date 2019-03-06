@@ -687,5 +687,116 @@ SELECT det.ver, det.totalNum, det.totalNumNoPay, det.NoStateNumNoPay, det.payNum
 FROM det 
 LEFT JOIN ret ON ret.ver = det.ver
 ";
+
+        internal static string qyxnQuery = @"
+SELECT  ( CASE t4.dept
+                WHEN '1' THEN '商超'
+                WHEN '2' THEN '餐饮'
+                WHEN '3' THEN '专卖'
+                WHEN '5' THEN '流通'
+				WHEN '6' THEN 'eshop'
+                WHEN '8' THEN '商锐'
+                WHEN 'H' THEN '孕婴童'
+                WHEN 'I' THEN '星食客'
+                WHEN 'C' THEN '生鲜便利'
+                ELSE '其他'
+           END ) AS ver , 
+         t3.Name ,
+         t1.industry AS provice ,
+         COUNT(DISTINCT t2.RecNo) AS totalnum ,
+         CAST(ROUND(
+                  SUM(DATEDIFF(
+                          MINUTE ,
+                          t2.FirstSubmitDate,
+                          ISNULL(t2.firsthandledate, GETDATE())))
+                  / ( COUNT(DISTINCT t2.RecNo) * 60.0 ) ,
+                  2) AS NUMERIC(20, 2)) AS real_first ,
+         CAST(ROUND(
+                  SUM(DATEDIFF(
+                          MINUTE ,
+                          t2.FirstSubmitDate,
+                          ISNULL(t2.finishhandledate, GETDATE())))
+                  / ( COUNT(DISTINCT t2.RecNo) * 60.0 ) ,
+                  2) AS NUMERIC(20, 2)) AS real_handle ,
+         CAST(ROUND(
+                  SUM(DATEDIFF(
+                          MINUTE ,
+                          t2.FirstSubmitDate,
+                          ISNULL(t2.Finishdate, GETDATE())))
+                  / ( COUNT(DISTINCT t2.RecNo) * 60.0 ) ,
+                  2) AS NUMERIC(20, 2)) AS real_close ,
+         CAST(ROUND(
+                  SUM(DATEDIFF(
+                          MINUTE ,
+                          t2.ValidFirstSubmitDate,
+                          CASE WHEN ISNULL(t2.firsthandledate, GETDATE()) > t2.ValidFirstSubmitDate THEN
+                                   ISNULL(t2.firsthandledate, GETDATE())
+                               ELSE t2.ValidFirstSubmitDate
+                          END)) / ( COUNT(DISTINCT t2.RecNo) * 60.0 ) ,
+                  2) AS NUMERIC(20, 2)) AS valid_first ,
+         CAST(ROUND(
+                  SUM(DATEDIFF(
+                          MINUTE ,
+                          t2.ValidFirstSubmitDate,
+                          CASE WHEN ISNULL(t2.finishhandledate, GETDATE()) > t2.ValidFirstSubmitDate THEN
+                                   ISNULL(t2.finishhandledate, GETDATE())
+                               ELSE t2.ValidFirstSubmitDate
+                          END)) / ( COUNT(DISTINCT t2.RecNo) * 60.0 ) ,
+                  2) AS NUMERIC(20, 2)) AS valid_handle ,
+         CAST(ROUND(
+                  SUM(DATEDIFF(
+                          MINUTE ,
+                          t2.ValidFirstSubmitDate,
+                          CASE WHEN ISNULL(t2.Finishdate, GETDATE()) > t2.ValidFirstSubmitDate THEN
+                                   ISNULL(t2.Finishdate, GETDATE())
+                               ELSE t2.ValidFirstSubmitDate
+                          END)) / ( COUNT(DISTINCT t2.RecNo) * 60.0 ) ,
+                  2) AS NUMERIC(20, 2)) AS valid_close ,
+         CAST(ROUND(( SUM(Handlenum) * 1.0 / COUNT(DISTINCT t2.RecNo)), 2) AS NUMERIC(20, 2)) AS avghandle ,
+         SUM(CASE HistoryTimeout
+                  WHEN '1' THEN 1
+                  ELSE 0
+             END) AS needfirsterror ,
+         SUM(CASE TimeoutNum
+                  WHEN '1' THEN 1
+                  ELSE 0
+             END) AS needhandleerror
+FROM     iss.QAQuestion t1 ,
+(   SELECT *
+    FROM   QAQuestionEffect
+    WHERE  RecNo NOT IN (   SELECT RecNo
+                            FROM   dbo.QAQuestionEffect
+                            WHERE  firsthandledate IS NULL
+                                   AND Status = '4'
+                                   AND CONVERT(CHAR(10), FirstSubmitDate, 121) >= '{0}'
+                                   AND CONVERT(CHAR(10), FirstSubmitDate, 121) <= '{1}' )
+           AND CONVERT(CHAR(10), FirstSubmitDate, 121) >= '{0}'
+           AND CONVERT(CHAR(10), FirstSubmitDate, 121) <= '{1}' ) t2 ,
+         iss.QAUser t3 ,
+         QADeptMaintenance t4 ,
+         QATaskDistribution t5
+WHERE    t1.RecNo = t2.RecNo
+         AND SUBSTRING(t1.UserID, 1, 1) <> 'v'
+         AND CONVERT(CHAR(10), t1.FirstSubmitDate, 121) >= '{0}'
+         AND CONVERT(CHAR(10), t1.FirstSubmitDate, 121) <= '{1}'
+         AND t1.UserID NOT LIKE 'siss%'
+         AND t1.UserID NOT LIKE '9876%'
+         AND ISNULL(ModifyCode, 1) LIKE '1'
+         AND t5.UserID = t3.UserID
+         AND Category <> '2'
+         AND t1.Version = t4.Version
+         AND t4.dept LIKE '{2}'
+         AND t1.industry = t5.provice
+         AND t5.deptid LIKE '{2}'
+         AND t1.UserID NOT IN (   SELECT agentid
+                                  FROM   t_AgentManger
+                                  WHERE  t_AgentManger.Trade = t4.dept )
+GROUP BY t3.Name ,
+         t1.industry ,
+         t4.dept
+ORDER BY t3.Name
+";
+
+
     }
 }
