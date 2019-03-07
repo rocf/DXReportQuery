@@ -33,9 +33,62 @@ namespace DXReportQuery
 
         public static DataTable QyxnQuery(string dept)
         {
-            return QyxnSqlQuery(Config.connectionString, QueryStrings.qyxnQuery, Config.beginTime, Config.endTime, dept);
+            return DeptSqlQuery(Config.connectionString, QueryStrings.qyxnQuery, Config.beginTime, Config.endTime, dept);
         }
 
+        public static DataTable VIPGblQuery(string dept)
+        {
+            return DeptSqlQuery(Config.connectionString, QueryStrings.vipGblQuery, Config.beginTime, Config.endTime, dept);
+        }
+
+        public static DataTable QybbQuery(string dept)
+        {
+            return DeptSqlQuery(Config.connectionString, QueryStrings.qybbQuery, Config.beginTime, Config.endTime, dept);
+        }
+
+        public static DataTable GrxnQuery(string dept)
+        {
+            return DeptSqlQuery(Config.connectionString, QueryStrings.grxnQuery, Config.beginTime, Config.endTime, dept);
+        }
+        public static DataTable VIPKhjlGrxnQuery(string dept)
+        {
+            return DeptSqlQuery(Config.connectionString, QueryStrings.vipKhjlGrxnQuery, Config.beginTime, Config.endTime, dept);
+        }
+
+        public static DataTable DlsyjQuery(string dept)
+        {
+            return DeptSqlQuery(Config.connectionString, QueryStrings.dlsyjQuery, Config.beginTime, Config.endTime, dept);
+        }
+
+        public static DataTable VIPDlsyjQuery(string dept)
+        {
+            return DeptSqlQuery(Config.connectionString, QueryStrings.vipDlsyjQuery, Config.beginTime, Config.endTime, dept);
+        }
+
+        public static DataTable WtyjQuery()
+        {
+            return SqlQuery(Config.connectionString, QueryStrings.wtyjQuery, Config.beginTime, Config.endTime);
+        }
+
+        public static DataTable WtxqzbQuery()
+        {
+            return SqlQuery(Config.connectionString, QueryStrings.wtxqzbQuery, Config.beginTime, Config.endTime);
+        }
+
+        public static DataTable ZzsktjQuery()
+        {
+            return SqlQuery(Config.connectionString, QueryStrings.zzsktjQuery, Config.beginTime, Config.endTime);
+        }
+
+        public static DataTable ZskclsltjQuery()
+        {
+            return SqlQuery(Config.connectionString, QueryStrings.zskclsltjQuery, Config.beginTime, Config.endTime);
+        }
+
+        public static DataTable ZskzltjQuery()
+        {
+            return SqlQuery(Config.connectionString, QueryStrings.zskzltjQuery, Config.beginTime, Config.endTime);
+        }
         private static DataTable SqlQuery(string connectionString, string sqlString, string beginTime, string endTime)
         {
             using (SqlConnection sqlConnection = new SqlConnection())
@@ -56,7 +109,7 @@ namespace DXReportQuery
             }
         }
 
-        private static DataTable QyxnSqlQuery(string connectionString, string sqlString, string beginTime, string endTime, string dept)
+        private static DataTable DeptSqlQuery(string connectionString, string sqlString, string beginTime, string endTime, string dept)
         {
             using (SqlConnection sqlConnection = new SqlConnection())
             {
