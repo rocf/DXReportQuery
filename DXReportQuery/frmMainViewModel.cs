@@ -13,21 +13,60 @@ namespace DXReportQuery
     [POCOViewModel()]
     public class frmMainViewModel
     {
-        public frmMainViewModel()
+
+        string startDate { get; set; }
+        string endDate { get; set; }
+        public frmMainViewModel(string sDate, string eDate)
         {
-            SetStartDate();
-            SetEndDate();
+           beginDate =  this.startDate = sDate;
+           lastDate = this.endDate = eDate;
         }
 
-        public virtual string startDate { get; set; }
-        public virtual string endDate { get; set; }
+        public virtual string StartDate
+        {
+            get { return startDate; }
+            set
+            {
+                if (startDate == value) return;
+                startDate = value;
+                OnStartDateChanged();
+            }
+        }
+
+        public virtual string EndDate
+        {
+            get { return endDate; }
+            set
+            {
+                if (endDate == value) return;
+                endDate = value;
+                OnEndDateChanged();
+            }
+        }
+        void OnStartDateChanged()
+        {
+            EventHandler h = StartDateChanged;
+            if (h != null) h(this, EventArgs.Empty);
+        }
+
+        void OnEndDateChanged()
+        {
+            EventHandler h = EndDateChanged;
+            if (h != null) h(this, EventArgs.Empty);
+        }
+
+        public event EventHandler StartDateChanged;
+        public event EventHandler EndDateChanged;
+
 
         public static string beginDate { get; set; }
         public static string lastDate { get; set; }
 
         public string GetStartDate()
         {
-            return DateTime.Now.AddDays(Convert.ToDouble((0 - Convert.ToInt16(DateTime.Now.DayOfWeek))) - 14 + 6).ToString("yyyy-MM-dd");
+            DateTimeFormatInfo dtFormat = new DateTimeFormatInfo();
+            dtFormat.ShortDatePattern = "yyyy-MM-dd";
+            return Convert.ToDateTime(frmMainView.frmMainForm.beiStartDate.EditValue.ToString(), dtFormat).ToString("yyyy-MM-dd");
         }
         public void SetStartDate()
         {
@@ -42,6 +81,14 @@ namespace DXReportQuery
         public void SetEndDate()
         {
             frmMainViewModel.lastDate = endDate = GetEndDate();
+        }
+
+        public void SetEndDate2()
+        {
+            DateTimeFormatInfo dtFormat = new DateTimeFormatInfo();
+            dtFormat.ShortDatePattern = "yyyy-MM-dd";
+            frmMainViewModel.lastDate = endDate = Convert.ToDateTime(frmMainView.frmMainForm.beiEndDate.EditValue.ToString(), dtFormat).ToString("yyyy-MM-dd");
+
         }
         internal void nbcRcgzbb_LinkClicked(object sender, NavBarLinkEventArgs e)
         {

@@ -32,6 +32,7 @@ namespace DXReportQuery
         }
         public static void DjwtView()
         {
+            Config Config = new Config();
             frmMainView.frmMainForm.ssQueryResultView.BeginUpdate();
 
             string sheetName = "问题登记";
@@ -142,6 +143,7 @@ namespace DXReportQuery
 
         public static void WtgblView()
         {
+            Config Config = new Config();
             frmMainView.frmMainForm.ssQueryResultView.BeginUpdate();
 
             string sheetName = "问题关闭率";
@@ -391,6 +393,7 @@ namespace DXReportQuery
 
         public static void QyxnView()
         {
+            Config Config = new Config();
             frmMainView.frmMainForm.ssQueryResultView.BeginUpdate();
 
             string sheetName = "区域效能";
@@ -568,6 +571,7 @@ namespace DXReportQuery
 
         public static void VIPGblView()
         {
+            Config Config = new Config();
             frmMainView.frmMainForm.ssQueryResultView.BeginUpdate();
 
             string sheetName = "VIP关闭率";
@@ -746,6 +750,7 @@ namespace DXReportQuery
 
         public static void QybbView()
         {
+            Config Config = new Config();
             frmMainView.frmMainForm.ssQueryResultView.BeginUpdate();
 
             string sheetName = "区域报表";
@@ -926,6 +931,7 @@ namespace DXReportQuery
 
         public static void GrxnView()
         {
+            Config Config = new Config();
             frmMainView.frmMainForm.ssQueryResultView.BeginUpdate();
 
             string sheetName = "个人效能";
@@ -1129,6 +1135,7 @@ namespace DXReportQuery
 
         public static void DlsyjView()
         {
+            Config Config = new Config();
             frmMainView.frmMainForm.ssQueryResultView.BeginUpdate();
 
             string sheetName = "代理商预警";
@@ -1225,6 +1232,7 @@ namespace DXReportQuery
 
         public static void VIPDlsyjView()
         {
+            Config Config = new Config();
             frmMainView.frmMainForm.ssQueryResultView.BeginUpdate();
 
             string sheetName = "VIP代理商预警";
@@ -1321,6 +1329,7 @@ namespace DXReportQuery
 
         public static void WtyjView()
         {
+            Config Config = new Config();
             frmMainView.frmMainForm.ssQueryResultView.BeginUpdate();
 
             string sheetName = "问题预警";
@@ -1408,6 +1417,7 @@ namespace DXReportQuery
 
         public static void ZzsktjView()
         {
+            Config Config = new Config();
             frmMainView.frmMainForm.ssQueryResultView.BeginUpdate();
 
             string sheetName = "周转知识库";

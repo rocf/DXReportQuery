@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            DevExpress.XtraEditors.Repository.RepositoryItemDateEdit repositoryItemDateEdit1;
             DevExpress.XtraSpreadsheet.UI.SpreadsheetCommandGalleryItemGroup spreadsheetCommandGalleryItemGroup1 = new DevExpress.XtraSpreadsheet.UI.SpreadsheetCommandGalleryItemGroup();
             DevExpress.XtraSpreadsheet.UI.SpreadsheetCommandGalleryItem spreadsheetCommandGalleryItem1 = new DevExpress.XtraSpreadsheet.UI.SpreadsheetCommandGalleryItem();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMainView));
@@ -461,10 +462,10 @@
             this.spreadsheetCommandBarButtonItem163 = new DevExpress.XtraSpreadsheet.UI.SpreadsheetCommandBarButtonItem();
             this.spreadsheetCommandBarButtonItem164 = new DevExpress.XtraSpreadsheet.UI.SpreadsheetCommandBarButtonItem();
             this.spreadsheetCommandBarButtonItem165 = new DevExpress.XtraSpreadsheet.UI.SpreadsheetCommandBarButtonItem();
-            this.beiStartDate = new DevExpress.XtraBars.BarEditItem();
-            this.repositoryItemDateEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemDateEdit();
             this.beiEndDate = new DevExpress.XtraBars.BarEditItem();
             this.repositoryItemDateEdit2 = new DevExpress.XtraEditors.Repository.RepositoryItemDateEdit();
+            this.beiStartDate = new DevExpress.XtraBars.BarEditItem();
+            this.repositoryItemDateEdit3 = new DevExpress.XtraEditors.Repository.RepositoryItemDateEdit();
             this.rpStart = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.rpbSettings = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.fileRibbonPage1 = new DevExpress.XtraSpreadsheet.UI.FileRibbonPage();
@@ -534,6 +535,11 @@
             this.spreadsheetCommandBarButtonItem134 = new DevExpress.XtraSpreadsheet.UI.SpreadsheetCommandBarButtonItem();
             this.mvvmContext1 = new DevExpress.Utils.MVVM.MVVMContext(this.components);
             this.splashScreenManager2 = new DevExpress.XtraSplashScreen.SplashScreenManager(this, typeof(global::DXReportQuery.WaitForm1), true, true);
+            this.barEditItem1 = new DevExpress.XtraBars.BarEditItem();
+            this.barEditItem2 = new DevExpress.XtraBars.BarEditItem();
+            repositoryItemDateEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemDateEdit();
+            ((System.ComponentModel.ISupportInitialize)(repositoryItemDateEdit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(repositoryItemDateEdit1.CalendarTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.commandBarGalleryDropDown2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.backstageViewControl1)).BeginInit();
@@ -551,10 +557,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.commandBarGalleryDropDown10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.commandBarGalleryDropDown11)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.commandBarGalleryDropDown12)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit1.CalendarTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit2.CalendarTimeProperties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit3.CalendarTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemZoomTrackBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nbcRcgzbb)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pcMain)).BeginInit();
@@ -562,6 +568,20 @@
             ((System.ComponentModel.ISupportInitialize)(this.spreadsheetBarController1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mvvmContext1)).BeginInit();
             this.SuspendLayout();
+            // 
+            // repositoryItemDateEdit1
+            // 
+            repositoryItemDateEdit1.AutoHeight = false;
+            repositoryItemDateEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            repositoryItemDateEdit1.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            repositoryItemDateEdit1.DisplayFormat.FormatString = "yyyy-MM-dd";
+            repositoryItemDateEdit1.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+            repositoryItemDateEdit1.EditFormat.FormatString = "yyyy-MM-dd";
+            repositoryItemDateEdit1.EditFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+            repositoryItemDateEdit1.Mask.EditMask = "yyyy-MM-dd";
+            repositoryItemDateEdit1.Name = "repositoryItemDateEdit1";
             // 
             // stylesRibbonPageGroup1
             // 
@@ -1036,11 +1056,11 @@
             this.spreadsheetCommandBarButtonItem163,
             this.spreadsheetCommandBarButtonItem164,
             this.spreadsheetCommandBarButtonItem165,
-            this.beiStartDate,
             this.beiEndDate,
-            this.Exit});
+            this.Exit,
+            this.beiStartDate});
             this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl1.MaxItemId = 311;
+            this.ribbonControl1.MaxItemId = 315;
             this.ribbonControl1.Name = "ribbonControl1";
             this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.rpStart,
@@ -1057,8 +1077,9 @@
             this.repositoryItemFontEdit1,
             this.repositoryItemSpreadsheetFontSizeEdit1,
             this.repositoryItemPopupGalleryEdit1,
-            this.repositoryItemDateEdit1,
-            this.repositoryItemDateEdit2});
+            repositoryItemDateEdit1,
+            this.repositoryItemDateEdit2,
+            this.repositoryItemDateEdit3});
             this.ribbonControl1.Size = new System.Drawing.Size(836, 150);
             this.ribbonControl1.StatusBar = this.ribbonStatusBar1;
             // 
@@ -3395,32 +3416,6 @@
             this.spreadsheetCommandBarButtonItem165.Id = 258;
             this.spreadsheetCommandBarButtonItem165.Name = "spreadsheetCommandBarButtonItem165";
             // 
-            // beiStartDate
-            // 
-            this.beiStartDate.Caption = "开始时间";
-            this.beiStartDate.Edit = this.repositoryItemDateEdit1;
-            this.beiStartDate.EditorShowMode = DevExpress.Utils.EditorShowMode.Click;
-            this.beiStartDate.EditValue = "";
-            this.beiStartDate.EditWidth = 100;
-            this.beiStartDate.Id = 259;
-            this.beiStartDate.ImageOptions.ImageUri.Uri = "SwitchTimeScalesTo";
-            this.beiStartDate.Name = "beiStartDate";
-            this.beiStartDate.Tag = "";
-            // 
-            // repositoryItemDateEdit1
-            // 
-            this.repositoryItemDateEdit1.AutoHeight = false;
-            this.repositoryItemDateEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.repositoryItemDateEdit1.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.repositoryItemDateEdit1.DisplayFormat.FormatString = "yyyy-MM-dd";
-            this.repositoryItemDateEdit1.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
-            this.repositoryItemDateEdit1.EditFormat.FormatString = "yyyy-MM-dd";
-            this.repositoryItemDateEdit1.EditFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
-            this.repositoryItemDateEdit1.Mask.EditMask = "yyyy-MM-dd";
-            this.repositoryItemDateEdit1.Name = "repositoryItemDateEdit1";
-            // 
             // beiEndDate
             // 
             this.beiEndDate.Caption = "结束时间";
@@ -3445,6 +3440,24 @@
             this.repositoryItemDateEdit2.EditFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
             this.repositoryItemDateEdit2.Mask.EditMask = "yyyy-MM-dd";
             this.repositoryItemDateEdit2.Name = "repositoryItemDateEdit2";
+            // 
+            // beiStartDate
+            // 
+            this.beiStartDate.Caption = "开始时间";
+            this.beiStartDate.Edit = this.repositoryItemDateEdit3;
+            this.beiStartDate.EditWidth = 100;
+            this.beiStartDate.Id = 313;
+            this.beiStartDate.ImageOptions.ImageUri.Uri = "SwitchTimeScalesTo";
+            this.beiStartDate.Name = "beiStartDate";
+            // 
+            // repositoryItemDateEdit3
+            // 
+            this.repositoryItemDateEdit3.AutoHeight = false;
+            this.repositoryItemDateEdit3.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.repositoryItemDateEdit3.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.repositoryItemDateEdit3.Name = "repositoryItemDateEdit3";
             // 
             // rpStart
             // 
@@ -3899,6 +3912,7 @@
             // nbixqpggzltj
             // 
             this.nbixqpggzltj.Caption = "需求评估师工作量统计";
+            this.nbixqpggzltj.Enabled = false;
             this.nbixqpggzltj.Name = "nbixqpggzltj";
             // 
             // pcMain
@@ -4229,6 +4243,28 @@
             // 
             this.splashScreenManager2.ClosingDelay = 500;
             // 
+            // barEditItem1
+            // 
+            this.barEditItem1.Caption = "结束时间";
+            this.barEditItem1.Edit = this.repositoryItemDateEdit2;
+            this.barEditItem1.EditValue = "";
+            this.barEditItem1.EditWidth = 100;
+            this.barEditItem1.Id = 260;
+            this.barEditItem1.ImageOptions.ImageUri.Uri = "SwitchTimeScalesTo";
+            this.barEditItem1.Name = "barEditItem1";
+            this.barEditItem1.Tag = "2019-02-19 15:05:57";
+            // 
+            // barEditItem2
+            // 
+            this.barEditItem2.Caption = "结束时间";
+            this.barEditItem2.Edit = this.repositoryItemDateEdit2;
+            this.barEditItem2.EditValue = "";
+            this.barEditItem2.EditWidth = 100;
+            this.barEditItem2.Id = 260;
+            this.barEditItem2.ImageOptions.ImageUri.Uri = "SwitchTimeScalesTo";
+            this.barEditItem2.Name = "barEditItem2";
+            this.barEditItem2.Tag = "2019-02-19 15:05:57";
+            // 
             // frmMainView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -4243,6 +4279,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.StatusBar = this.ribbonStatusBar1;
             this.Text = "报表";
+            ((System.ComponentModel.ISupportInitialize)(repositoryItemDateEdit1.CalendarTimeProperties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(repositoryItemDateEdit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.commandBarGalleryDropDown2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.backstageViewControl1)).EndInit();
@@ -4260,10 +4298,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.commandBarGalleryDropDown10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.commandBarGalleryDropDown11)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.commandBarGalleryDropDown12)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit1.CalendarTimeProperties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit2.CalendarTimeProperties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit3.CalendarTimeProperties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemZoomTrackBar1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nbcRcgzbb)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pcMain)).EndInit();
@@ -4618,9 +4656,6 @@
         private DevExpress.XtraSpreadsheet.UI.SpreadsheetCommandBarButtonItem spreadsheetCommandBarButtonItem132;
         private DevExpress.XtraSpreadsheet.UI.SpreadsheetCommandBarButtonItem spreadsheetCommandBarButtonItem133;
         private DevExpress.XtraSpreadsheet.UI.SpreadsheetCommandBarButtonItem spreadsheetCommandBarButtonItem134;
-        private DevExpress.XtraBars.BarEditItem beiStartDate;
-        private DevExpress.XtraEditors.Repository.RepositoryItemDateEdit repositoryItemDateEdit1;
-        private DevExpress.XtraBars.BarEditItem beiEndDate;
         private DevExpress.XtraEditors.Repository.RepositoryItemDateEdit repositoryItemDateEdit2;
         private DevExpress.XtraBars.BarButtonItem Exit;
         private DevExpress.XtraBars.Ribbon.BackstageViewControl backstageViewControl1;
@@ -4628,6 +4663,11 @@
         private DevExpress.Utils.MVVM.MVVMContext mvvmContext1;
         public DevExpress.XtraSpreadsheet.SpreadsheetControl ssQueryResultView;
         public DevExpress.XtraSplashScreen.SplashScreenManager splashScreenManager2;
+        public DevExpress.XtraBars.BarEditItem beiEndDate;
+        private DevExpress.XtraEditors.Repository.RepositoryItemDateEdit repositoryItemDateEdit3;
+        public DevExpress.XtraBars.BarEditItem barEditItem1;
+        public DevExpress.XtraBars.BarEditItem barEditItem2;
+        public DevExpress.XtraBars.BarEditItem beiStartDate;
     }
 }
 
