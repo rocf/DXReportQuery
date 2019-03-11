@@ -1382,8 +1382,39 @@ ORDER BY version DESC ,
          username;
 ";
 
-        internal static string wtxqzbQuery = @"
-
+        internal static string wtxqzblQuery = @"
+SELECT  ---t1.Version AS version ,
+        CASE t2.dept
+          WHEN '1' THEN '商云'
+          WHEN '2' THEN '餐饮'
+          WHEN '3' THEN '专卖'
+          WHEN '6' THEN 'ESHOP'
+          WHEN 'I' THEN '星食客'
+          WHEN 'H' THEN '孕婴童'
+          WHEN 'C' THEN '生鲜便利'
+          WHEN '8' THEN '商锐'
+          ELSE '其他'
+        END AS Dept ,
+        ( SELECT    name
+          FROM      iss.QADictionary
+          WHERE     type = 2
+                    AND no = t1.version
+        ) AS version ,
+        t1.FirstSubmitDate AS FirstSubmitDate ,
+        t1.Category AS Category ,
+        t1.SubStatus AS ModifyCode ,
+        t1.RequirementNo AS RequirementNo ,
+        t2.dept AS Dept  
+FROM    QAQuestion t1 ,
+        QADeptMaintenance t2 
+WHERE 
+         SUBSTRING(t1.userid, 1, 1) <> 'v'
+        AND CONVERT(CHAR(10), t1.FirstSubmitDate, 121) >=  '{0}'
+        AND CONVERT(CHAR(10), t1.FirstSubmitDate, 121) <=  '{1}'
+        AND t2.dept IN ( '1', '2', '3', '6', '8', 'H', 'I', 'C' )
+        AND t1.Version = t2.Version
+        ----  AND t2.dept = 'I'
+ORDER BY  t2.Dept,t1.Version 
 ";
 
         internal static string zzsktjQuery = @"

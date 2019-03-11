@@ -1060,7 +1060,7 @@
             this.Exit,
             this.beiStartDate});
             this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl1.MaxItemId = 315;
+            this.ribbonControl1.MaxItemId = 318;
             this.ribbonControl1.Name = "ribbonControl1";
             this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.rpStart,
@@ -1238,7 +1238,7 @@
             this.ssQueryResultView.Name = "ssQueryResultView";
             this.ssQueryResultView.Options.Import.Csv.Encoding = ((System.Text.Encoding)(resources.GetObject("ssQueryResultView.Options.Import.Csv.Encoding")));
             this.ssQueryResultView.Options.Import.Txt.Encoding = ((System.Text.Encoding)(resources.GetObject("ssQueryResultView.Options.Import.Txt.Encoding")));
-            this.ssQueryResultView.Size = new System.Drawing.Size(672, 339);
+            this.ssQueryResultView.Size = new System.Drawing.Size(672, 386);
             this.ssQueryResultView.TabIndex = 9;
             this.ssQueryResultView.Text = "ssQueryResultView";
             // 
@@ -3772,7 +3772,7 @@
             // 
             // ribbonStatusBar1
             // 
-            this.ribbonStatusBar1.Location = new System.Drawing.Point(0, 531);
+            this.ribbonStatusBar1.Location = new System.Drawing.Point(0, 578);
             this.ribbonStatusBar1.Name = "ribbonStatusBar1";
             this.ribbonStatusBar1.Ribbon = this.ribbonControl1;
             this.ribbonStatusBar1.Size = new System.Drawing.Size(836, 21);
@@ -3790,6 +3790,7 @@
             // 
             this.nbcRcgzbb.ActiveGroup = this.nbgRcgzbb;
             this.nbcRcgzbb.Dock = System.Windows.Forms.DockStyle.Left;
+            this.nbcRcgzbb.DragDropFlags = DevExpress.XtraNavBar.NavBarDragDrop.None;
             this.nbcRcgzbb.Groups.AddRange(new DevExpress.XtraNavBar.NavBarGroup[] {
             this.nbgRcgzbb});
             this.nbcRcgzbb.HideGroupCaptions = true;
@@ -3816,7 +3817,7 @@
             this.nbcRcgzbb.OptionsNavPane.ShowOverflowPanel = false;
             this.nbcRcgzbb.OptionsNavPane.ShowSplitter = false;
             this.nbcRcgzbb.PaintStyleKind = DevExpress.XtraNavBar.NavBarViewKind.NavigationPane;
-            this.nbcRcgzbb.Size = new System.Drawing.Size(160, 381);
+            this.nbcRcgzbb.Size = new System.Drawing.Size(160, 428);
             this.nbcRcgzbb.TabIndex = 2;
             this.nbcRcgzbb.Text = "navBarControl1";
             this.nbcRcgzbb.View = new DevExpress.XtraNavBar.ViewInfo.StandardSkinNavigationPaneViewInfoRegistrator("Office 2016 Colorful");
@@ -3855,7 +3856,12 @@
             // 
             // nbiWtmxgbl
             // 
+            this.nbiWtmxgbl.Appearance.BackColor = System.Drawing.Color.Black;
+            this.nbiWtmxgbl.Appearance.ForeColor = System.Drawing.Color.Black;
+            this.nbiWtmxgbl.Appearance.Options.UseBackColor = true;
+            this.nbiWtmxgbl.Appearance.Options.UseForeColor = true;
             this.nbiWtmxgbl.Caption = "问题明细关闭率";
+            this.nbiWtmxgbl.Enabled = false;
             this.nbiWtmxgbl.Name = "nbiWtmxgbl";
             // 
             // nbiQyxn
@@ -3902,6 +3908,7 @@
             // nbiWtxqzbl
             // 
             this.nbiWtxqzbl.Caption = "问题需求占比量";
+            this.nbiWtxqzbl.Enabled = false;
             this.nbiWtxqzbl.Name = "nbiWtxqzbl";
             // 
             // nbiZzzsk
@@ -3924,7 +3931,7 @@
             this.pcMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pcMain.Location = new System.Drawing.Point(160, 150);
             this.pcMain.Name = "pcMain";
-            this.pcMain.Size = new System.Drawing.Size(676, 381);
+            this.pcMain.Size = new System.Drawing.Size(676, 428);
             this.pcMain.TabIndex = 5;
             // 
             // splitterControl1
@@ -4269,7 +4276,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(836, 552);
+            this.ClientSize = new System.Drawing.Size(836, 599);
             this.Controls.Add(this.pcMain);
             this.Controls.Add(this.nbcRcgzbb);
             this.Controls.Add(this.ribbonStatusBar1);

@@ -3,89 +3,131 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DevExpress.Spreadsheet;
+using System.Drawing;
 
 namespace DXReportQuery
 {
     public static class SpreadSheetStyles
     {
-        private static bool DjwtSheetStyleInitFlag = false;
+        private static bool SheetStyleInitFlag = false;
 
-        public static void DjwtSheetStyleInit(IWorkbook workBook)
+        public static void SheetStyleInit(IWorkbook workBook)
         {
-            if (!DjwtSheetStyleInitFlag)
+            if (!SheetStyleInitFlag)
             {
-                DjwtSheetStyle.DjwtSheetTitleStyle(workBook);
-                DjwtSheetStyle.DjwtSheetHeadSytle(workBook);
-                DjwtSheetStyle.DjwtSheetNormalSytle(workBook);
-                DjwtSheetStyle.DjwtSheetSubTotalSytle(workBook);
+                SheetStyle.SheetTitleStyle(workBook);
+                SheetStyle.SheetHeadStyle(workBook);
+                SheetStyle.SheetNormalStyle(workBook);
+                SheetStyle.SheetSubTotalStyle(workBook);
             }
 
-            DjwtSheetStyleInitFlag = true;
+            SheetStyleInitFlag = true;
         }
-        public class DjwtSheetStyle
+        public class SheetStyle
         {
-            public static void DjwtSheetTitleStyle(IWorkbook workBook)
+            public static void SheetTitleStyle(IWorkbook workBook)
             {
-                Style myDjwtSheetTitleStyle = workBook.Styles.Add("myDjwtSheetTitleStyle");
-                myDjwtSheetTitleStyle.CopyFrom(BuiltInStyleId.Title);
-                myDjwtSheetTitleStyle.BeginUpdate();
+                Style SheetTitleStyle = workBook.Styles.Add("SheetTitleStyle");
+                //SheetTitleStyle.CopyFrom(BuiltInStyleId.Heading2);
+                SheetTitleStyle.BeginUpdate();
+                try
+                {
+                    SheetTitleStyle.Font.Name = "宋体";
+                    SheetTitleStyle.Font.Size = 18;
+                    SheetTitleStyle.Font.Color = Color.FromArgb(52, 150, 151);
+                    SheetTitleStyle.Alignment.Horizontal = SpreadsheetHorizontalAlignment.Left;
+                    SheetTitleStyle.Alignment.Vertical = SpreadsheetVerticalAlignment.Center;
+                }
+                finally
+                {
+                    SheetTitleStyle.EndUpdate();
+                }
+            }
+
+            public static void SheetHeadStyle(IWorkbook workBook)
+            {
+                Style SheetHeadStyle = workBook.Styles.Add("SheetHeadSytle");
+                //SheetHeadSytle.CopyFrom(BuiltInStyleId.Accent6);
+
+                SheetHeadStyle.BeginUpdate();
+                try
+                {
+                    
+                    SheetHeadStyle.Borders.TopBorder.Color = Color.FromArgb(166,166,166);
+                    SheetHeadStyle.Borders.BottomBorder.Color = Color.FromArgb(166, 166, 166);
+
+                    SheetHeadStyle.Borders.LeftBorder.Color = Color.White;
+                    SheetHeadStyle.Borders.RightBorder.Color = Color.White;
+
+                    SheetHeadStyle.Fill.BackgroundColor = Color.FromArgb(242,242,242);
+                    SheetHeadStyle.Alignment.Horizontal = SpreadsheetHorizontalAlignment.Center;
+                    SheetHeadStyle.Alignment.Vertical = SpreadsheetVerticalAlignment.Center;
+
+                    SheetHeadStyle.Font.Size = 11;
+                    SheetHeadStyle.Font.Color = Color.FromArgb(52, 150, 151);
+
+                }           
+                finally
+                {
+                    SheetHeadStyle.EndUpdate();
+                }
+            }
+
+            public static void SheetNormalStyle(IWorkbook workBook)
+            {
+                Style SheetNormalStyle = workBook.Styles.Add("SheetNormalSytle");
+                SheetNormalStyle.CopyFrom(BuiltInStyleId.Normal);
+
+                SheetNormalStyle.BeginUpdate();
+                try
+                {
+                    SheetNormalStyle.Font.Size = 11;
+                    SheetNormalStyle.Alignment.Horizontal = SpreadsheetHorizontalAlignment.Center;
+                    SheetNormalStyle.Alignment.Vertical = SpreadsheetVerticalAlignment.Center;
+                }
+                finally
+                {
+                    SheetNormalStyle.EndUpdate();
+                }
+            }
+
+            public static void SheetSubTotalStyle(IWorkbook workBook)
+            {
+                Style SheetSubTotalStyle = workBook.Styles.Add("SheetSubTotalSytle");
+                SheetSubTotalStyle.CopyFrom(BuiltInStyleId.Neutral);
+
+                SheetSubTotalStyle.BeginUpdate();
+                try
+                {
+                    SheetSubTotalStyle.Font.Size = 11;
+                    SheetSubTotalStyle.Font.Bold = true;
+                    SheetSubTotalStyle.Alignment.Horizontal = SpreadsheetHorizontalAlignment.Center;
+                    SheetSubTotalStyle.Alignment.Vertical = SpreadsheetVerticalAlignment.Center;
+
+                }
+                finally
+                {
+                    SheetSubTotalStyle.EndUpdate();
+                }
+            }
+
+            public static void SheetSumTotalStyle(IWorkbook workBook)
+            {
+                Style SheetSumTotalStyle = workBook.Styles.Add("SheetSumTotalSytle");
+                SheetSumTotalStyle.CopyFrom(BuiltInStyleId.Calculation);
+
+                SheetSumTotalStyle.BeginUpdate();
                 try
                 {
 
                 }
                 finally
                 {
-                    myDjwtSheetTitleStyle.EndUpdate();
+                    SheetSumTotalStyle.EndUpdate();
                 }
             }
 
-            public static void DjwtSheetHeadSytle(IWorkbook workBook)
-            {
-                Style myDjwtSheetHeadSytle = workBook.Styles.Add("myDjwtSheetHeadSytle");
-                myDjwtSheetHeadSytle.CopyFrom(BuiltInStyleId.Accent6);
-
-                myDjwtSheetHeadSytle.BeginUpdate();
-                try
-                {
-
-                }
-                finally
-                {
-                    myDjwtSheetHeadSytle.EndUpdate();
-                }
-            }
-
-            public static void DjwtSheetNormalSytle(IWorkbook workBook)
-            {
-                Style myDjwtSheetNormalSytle = workBook.Styles.Add("myDjwtSheetNormalSytle");
-                myDjwtSheetNormalSytle.CopyFrom(BuiltInStyleId.Normal);
-
-                myDjwtSheetNormalSytle.BeginUpdate();
-                try
-                {
-
-                }
-                finally
-                {
-                    myDjwtSheetNormalSytle.EndUpdate();
-                }
-            }
-
-            public static void DjwtSheetSubTotalSytle(IWorkbook workBook)
-            {
-                Style myDjwtSheetSubTotalSytle = workBook.Styles.Add("myDjwtSheetSubTotalSytle");
-                myDjwtSheetSubTotalSytle.CopyFrom(BuiltInStyleId.Neutral);
-
-                myDjwtSheetSubTotalSytle.BeginUpdate();
-                try
-                {
-
-                }
-                finally
-                {
-                    myDjwtSheetSubTotalSytle.EndUpdate();
-                }
-            }
+           
         }
 
 

@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Data;
 using DevExpress.Spreadsheet;
 using static DXReportQuery.SpreadSheetStyles;
+using System.Drawing;
 
 namespace DXReportQuery
 {
@@ -29,6 +30,42 @@ namespace DXReportQuery
 
             Worksheet newworksheet = workbook.Worksheets[sheetName];
             return newworksheet;
+        }
+
+        private static Color GetDeptBackgroundColor(Range cellRange)
+        {
+            string dept = cellRange.Value.ToString();
+            Color color = Color.White;
+            switch (dept) {
+                case "商超":
+                    color = Color.FromArgb(240, 248, 255);
+                    break;
+                case "生鲜便利":
+                    color = Color.FromArgb(255, 228, 196);
+                    break;
+                case "商锐":
+                    color = Color.FromArgb(152, 251, 152);
+                    break;
+                case "专卖":
+                    color = Color.FromArgb(250, 235, 215);
+                    break;
+                case "孕婴童":
+                    color = Color.FromArgb(64, 224, 208);
+                    break;
+                case "餐饮":
+                    color = Color.FromArgb(211, 211, 211);
+                    break;
+                case "星食客":
+                    color = Color.FromArgb(255,182,193);
+                    break;
+                case "eshop":
+                    color = Color.FromArgb(250, 250, 210);
+                    break;
+                default:
+                    color = Color.White;
+                    break;
+            }
+            return color;
         }
         public static void DjwtView()
         {
@@ -57,7 +94,7 @@ namespace DXReportQuery
             }
 
             IWorkbook workbook = frmMainView.frmMainForm.ssQueryResultView.Document;
-            DjwtSheetStyleInit(workbook);
+            SpreadSheetStyles.SheetStyleInit(workbook);
 
             workbook.DocumentSettings.R1C1ReferenceStyle = true;
 
@@ -66,8 +103,9 @@ namespace DXReportQuery
             worksheet.ActiveView.ShowGridlines = false;
             Range sheetTitleRange = worksheet.Range.FromLTRB(0, sheetRowCounts, 8, sheetRowCounts);
             worksheet.MergeCells(sheetTitleRange);
-            // sheetTitleRange.Style = workbook.Styles["myDjwtSheetTitleStyle"];
+            sheetTitleRange.Style = workbook.Styles["SheetTitleStyle"];
             sheetTitleRange.SetValueFromText(sheetTitle);
+            sheetTitleRange.RowHeight = 30 * 4.16;
             sheetRowCounts += 1;
 
             List<string> sheetTableHeadList = new List<string> { "行业", "工号", "姓名", "问题登记量", "回访数", "需求登记量", "回访率", "关闭（解决）率", "平均回访周期" };
@@ -75,12 +113,14 @@ namespace DXReportQuery
             {
                 Range sheetTableHeadRange = worksheet.Range.FromLTRB(i, sheetRowCounts, i, sheetRowCounts);
                 sheetTableHeadRange.SetValueFromText(sheetTableHeadList[i].ToString());
-                //sheetTableHeadRange.Style = workbook.Styles["myDjwtSheetHeadSytle"];
+                sheetTableHeadRange.Style = workbook.Styles["SheetHeadSytle"];
+                sheetTableHeadRange.ColumnWidth = 15 * 22;
                 if (i >= 6)
                 {
                     // sheetTableHeadRange.Style = workbook.Styles["Output"];
                 }
             }
+            worksheet.Range.FromLTRB(0, sheetRowCounts, 0, sheetRowCounts).RowHeight = 27 * 4.16;
             sheetRowCounts += 1;
 
             foreach (KeyValuePair<string, int> kv in branchCount)
@@ -92,37 +132,50 @@ namespace DXReportQuery
                     {
                         Range sheetNormal = worksheet.Range.FromLTRB(i, sheetRowCounts, i, sheetRowCounts);
                         sheetNormal.SetValueFromText(dr[i].ToString());
-                        //sheetNormal.Style = workbook.Styles["myDjwtSheetNormalSytle"];
+                        sheetNormal.Style = workbook.Styles["SheetNormalSytle"];
+
+                        if (sheetRowCounts % 2 == 0)
+                        {
+                            sheetNormal.Fill.BackgroundColor = Color.FromArgb(251, 251, 251);
+                        }
+                        else
+                        {
+                            sheetNormal.Fill.BackgroundColor = Color.FromArgb(237, 237, 237);
+                        }
 
                         if (i == 6)
                         {
                             sheetNormal.NumberFormat = "0.00%";
                         }
                     }
+                    worksheet.Range.FromLTRB(0, sheetRowCounts, 0, sheetRowCounts).RowHeight = 22 * 4.16;
+                    
                     sheetRowCounts += 1;
                 }
 
                 for (int i = 0; i < djwtDataTable.Columns.Count; i++)
                 {
                     Range sheetSubTotal = worksheet.Range.FromLTRB(i, sheetRowCounts, i, sheetRowCounts);
-
+                    sheetSubTotal.RowHeight = 25 * 4.16;
+                    sheetSubTotal.Style = workbook.Styles["SheetSubTotalSytle"];
                     if (i == 0)
                     {
                         sheetSubTotal = worksheet.Range.FromLTRB(0, sheetRowCounts - kv.Value, 0, sheetRowCounts);
                         worksheet.MergeCells(sheetSubTotal);
+                        sheetSubTotal.Fill.BackgroundColor = GetDeptBackgroundColor(sheetSubTotal);
                     }
 
                     if (i == 1)
                     {
 
                         sheetSubTotal.SetValueFromText("小计：");
-                        //sheetSubTotal.Style = workbook.Styles["myDjwtSheetSubTotalSytle"];
+                        sheetSubTotal.Style = workbook.Styles["SheetSubTotalSytle"];
                     }
 
                     if (i >= 3 & i <= 6)
                     {
                         sheetSubTotal.Formula = $"=SUM(R[-{kv.Value}]C:R[-1]C)";
-                        // sheetSubTotal.Style = workbook.Styles["myDjwtSheetSubTotalSytle"];
+                        sheetSubTotal.Style = workbook.Styles["SheetSubTotalSytle"];
 
                         if (i == 6)
                         {
@@ -1144,7 +1197,6 @@ namespace DXReportQuery
  
 
             IWorkbook workbook = frmMainView.frmMainForm.ssQueryResultView.Document;
-            DjwtSheetStyleInit(workbook);
 
             workbook.DocumentSettings.R1C1ReferenceStyle = true;
 
@@ -1241,7 +1293,6 @@ namespace DXReportQuery
 
 
             IWorkbook workbook = frmMainView.frmMainForm.ssQueryResultView.Document;
-            DjwtSheetStyleInit(workbook);
 
             workbook.DocumentSettings.R1C1ReferenceStyle = true;
 
@@ -1354,7 +1405,6 @@ namespace DXReportQuery
             }
 
             IWorkbook workbook = frmMainView.frmMainForm.ssQueryResultView.Document;
-            DjwtSheetStyleInit(workbook);
 
             workbook.DocumentSettings.R1C1ReferenceStyle = true;
 
@@ -1442,7 +1492,6 @@ namespace DXReportQuery
             }
 
             IWorkbook workbook = frmMainView.frmMainForm.ssQueryResultView.Document;
-            DjwtSheetStyleInit(workbook);
 
             workbook.DocumentSettings.R1C1ReferenceStyle = true;
 
@@ -1451,7 +1500,7 @@ namespace DXReportQuery
             worksheet.ActiveView.ShowGridlines = false;
             Range sheetTitleRange = worksheet.Range.FromLTRB(0, sheetRowCounts, 2, sheetRowCounts);
             worksheet.MergeCells(sheetTitleRange);
-            // sheetTitleRange.Style = workbook.Styles["myDjwtSheetTitleStyle"];
+            sheetTitleRange.Style = workbook.Styles["SheetTitleStyle"];
             sheetTitleRange.SetValueFromText(sheetTitle);
             sheetRowCounts += 1;
 
@@ -1460,7 +1509,7 @@ namespace DXReportQuery
             {
                 Range sheetTableHeadRange = worksheet.Range.FromLTRB(i, sheetRowCounts, i, sheetRowCounts);
                 sheetTableHeadRange.SetValueFromText(sheetTableHeadList[i].ToString());
-                //sheetTableHeadRange.Style = workbook.Styles["myDjwtSheetHeadSytle"];
+                sheetTableHeadRange.Style = workbook.Styles["SheetHeadSytle"];
                 if (i >= 6)
                 {
                     // sheetTableHeadRange.Style = workbook.Styles["Output"];
@@ -1477,7 +1526,7 @@ namespace DXReportQuery
                     {
                         Range sheetNormal = worksheet.Range.FromLTRB(i, sheetRowCounts, i, sheetRowCounts);
                         sheetNormal.SetValueFromText(dr[i].ToString());
-                        //sheetNormal.Style = workbook.Styles["myDjwtSheetNormalSytle"];
+                        sheetNormal.Style = workbook.Styles["SheetNormalSytle"];
                     }
                     sheetRowCounts += 1;
                 }

@@ -85,7 +85,7 @@ namespace DXReportQuery
         public static DataTable WtxqzbQuery()
         {
             Config Config = new Config();
-            return SqlQuery(Config.connectionString, QueryStrings.wtxqzbQuery, Config.beginTime, Config.endTime);
+            return SqlQuery(Config.connectionString, QueryStrings.wtxqzblQuery, Config.beginTime, Config.endTime);
         }
 
         public static DataTable ZzsktjQuery()
@@ -100,6 +100,11 @@ namespace DXReportQuery
             return SqlQuery(Config.connectionString, QueryStrings.zskclsltjQuery, Config.beginTime, Config.endTime);
         }
 
+        public static DataTable WtxqzblQuery()
+        {
+            Config Config = new Config();
+            return SqlQuery(Config.connectionString, QueryStrings.wtxqzblQuery, Config.beginTime, Config.endTime);
+        }
         public static DataTable ZskzltjQuery()
         {
             Config Config = new Config();
