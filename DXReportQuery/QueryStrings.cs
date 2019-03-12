@@ -928,7 +928,7 @@ FROM     (   SELECT   qauser.name ,
                              WHEN '6' THEN 'ESHOP'
                              WHEN 'H' THEN '孕婴童'
                              WHEN 'I' THEN '星食客'
-                             WHEN 'C' THEN '新零售'
+                             WHEN 'C' THEN '生鲜便利'
                              ELSE ''
                         END ) AS ver ,
                       QAQuestion.industry AS provice ,
@@ -991,10 +991,11 @@ SELECT   ( CASE t4.dept
                 WHEN '2' THEN '餐饮'
                 WHEN '3' THEN '专卖'
                 WHEN '5' THEN '流通'
+                WHEN '6' THEN 'eshop'
                 WHEN '8' THEN '商锐'
                 WHEN 'H' THEN '孕婴童'
                 WHEN 'I' THEN '星食客'
-                WHEN 'C' THEN '新零售'
+                WHEN 'C' THEN '生鲜便利'
                 ELSE '其他'
            END ) AS companyName ,
          t3.name ,

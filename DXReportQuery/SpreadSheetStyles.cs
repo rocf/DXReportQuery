@@ -19,6 +19,7 @@ namespace DXReportQuery
                 SheetStyle.SheetHeadStyle(workBook);
                 SheetStyle.SheetNormalStyle(workBook);
                 SheetStyle.SheetSubTotalStyle(workBook);
+                SheetStyle.SheetSumTotalStyle(workBook);
             }
 
             SheetStyleInitFlag = true;
@@ -46,8 +47,8 @@ namespace DXReportQuery
 
             public static void SheetHeadStyle(IWorkbook workBook)
             {
-                Style SheetHeadStyle = workBook.Styles.Add("SheetHeadSytle");
-                //SheetHeadSytle.CopyFrom(BuiltInStyleId.Accent6);
+                Style SheetHeadStyle = workBook.Styles.Add("SheetHeadStyle");
+                //SheetHeadStyle.CopyFrom(BuiltInStyleId.Accent6);
 
                 SheetHeadStyle.BeginUpdate();
                 try
@@ -75,7 +76,7 @@ namespace DXReportQuery
 
             public static void SheetNormalStyle(IWorkbook workBook)
             {
-                Style SheetNormalStyle = workBook.Styles.Add("SheetNormalSytle");
+                Style SheetNormalStyle = workBook.Styles.Add("SheetNormalStyle");
                 SheetNormalStyle.CopyFrom(BuiltInStyleId.Normal);
 
                 SheetNormalStyle.BeginUpdate();
@@ -93,7 +94,7 @@ namespace DXReportQuery
 
             public static void SheetSubTotalStyle(IWorkbook workBook)
             {
-                Style SheetSubTotalStyle = workBook.Styles.Add("SheetSubTotalSytle");
+                Style SheetSubTotalStyle = workBook.Styles.Add("SheetSubTotalStyle");
                 SheetSubTotalStyle.CopyFrom(BuiltInStyleId.Neutral);
 
                 SheetSubTotalStyle.BeginUpdate();
@@ -113,12 +114,17 @@ namespace DXReportQuery
 
             public static void SheetSumTotalStyle(IWorkbook workBook)
             {
-                Style SheetSumTotalStyle = workBook.Styles.Add("SheetSumTotalSytle");
-                SheetSumTotalStyle.CopyFrom(BuiltInStyleId.Calculation);
+                Style SheetSumTotalStyle = workBook.Styles.Add("SheetSumTotalStyle");
+                SheetSumTotalStyle.CopyFrom(BuiltInStyleId.Input);
 
                 SheetSumTotalStyle.BeginUpdate();
                 try
                 {
+                    SheetSumTotalStyle.Font.Size = 12;
+                    SheetSumTotalStyle.Font.Bold = true;
+                    SheetSumTotalStyle.Borders.SetAllBorders(Color.White, BorderLineStyle.None);
+                    SheetSumTotalStyle.Alignment.Horizontal = SpreadsheetHorizontalAlignment.Center;
+                    SheetSumTotalStyle.Alignment.Vertical = SpreadsheetVerticalAlignment.Center;
 
                 }
                 finally
