@@ -17,7 +17,7 @@ namespace DXReportQuery
         internal string beginTime;
         internal string endTime;
 
-        internal string connectionString = "Data Source=120.78.131.78,6985;Initial Catalog=iss_support;User Id=iss;Password=support@siss2014";
+        internal string connectionString = "Data Source=;Initial Catalog=;User Id=;Password=";
 
         public string GetStartDate()
         {
